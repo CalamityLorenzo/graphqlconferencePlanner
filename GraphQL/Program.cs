@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlite("DataSource=conferences.db"));
+builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(opts => opts.UseSqlite("DataSource=conferences.db"));
 
 builder.Services.AddGraphQLServer()
-                .AddQueryType<Query>();
-
+                .AddQueryType<Query>()
+                .AddMutationType<Mutation>();
 var app = builder.Build();
 
 if (builder.Environment.IsDevelopment())
