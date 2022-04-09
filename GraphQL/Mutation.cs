@@ -5,6 +5,10 @@ namespace ConferencePlanner.GraphQL
 {
     public class Mutation
     {
+        // DI is on the method.
+        // The way the di is handled for a particular argument can be mamnaged in the attributes
+        // Notcing the scope is also an attribute.
+        // this is a not good.
         [UseApplicationDbContext]
         public async Task<AddSpeakerPayload> AddSpeakerAsync(AddSpeakerInput input, [ScopedService] ApplicationDbContext ctx)
         {
