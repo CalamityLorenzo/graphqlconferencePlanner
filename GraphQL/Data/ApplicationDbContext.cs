@@ -30,7 +30,7 @@ namespace ConferencePlanner.GraphQL.Data
 
         public DbSet<Track> Tracks { get; set; } = default!;
 
-        public DbSet<Speaker> Speakers { get; set; } = default!;
+        public DbSet<SpeakerDb> Speakers { get; set; } = default!;
 
         public DbSet<Attendee> Attendees { get; set; } = default!;
     }

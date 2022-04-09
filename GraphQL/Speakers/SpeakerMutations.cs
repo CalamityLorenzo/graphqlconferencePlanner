@@ -1,9 +1,10 @@
 ﻿using ConferencePlanner.GraphQL.Data;
 using ConferencePlanner.GraphQL.Extensions;
 
-namespace ConferencePlanner.GraphQL
+namespace ConferencePlanner.GraphQL.Speakers
 {
-    public class Mutation
+    [ExtendObjectType("Mutation")]
+    public class SpeakerMutations
     {
         // DI is on the method.
         // The way the di is handled for a particular argument can be mamnaged in the attributes
@@ -12,7 +13,7 @@ namespace ConferencePlanner.GraphQL
         [UseApplicationDbContext]
         public async Task<AddSpeakerPayload> AddSpeakerAsync(AddSpeakerInput input, [ScopedService] ApplicationDbContext ctx)
         {
-            var speaker = new Speaker
+            var speaker = new SpeakerDb
             {
                 Name = input.Name,
                 Bio = input.Bio,

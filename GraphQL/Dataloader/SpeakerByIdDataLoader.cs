@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanner.GraphQL.Dataloader
 {
-    public class SpeakerByIdDataLoader : BatchDataLoader<int, Speaker>
+    public class SpeakerByIdDataLoader : BatchDataLoader<int, SpeakerDb>
     {
         private readonly IDbContextFactory<ApplicationDbContext> dbContextFactory;
 
@@ -12,7 +12,7 @@ namespace ConferencePlanner.GraphQL.Dataloader
             this.dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
         }
 
-        protected override async Task<IReadOnlyDictionary<int, Speaker>> LoadBatchAsync(IReadOnlyList<int> keys, CancellationToken cancellationToken)
+        protected override async Task<IReadOnlyDictionary<int, SpeakerDb>> LoadBatchAsync(IReadOnlyList<int> keys, CancellationToken cancellationToken)
         {
             await using ApplicationDbContext ctx = dbContextFactory.CreateDbContext();
 

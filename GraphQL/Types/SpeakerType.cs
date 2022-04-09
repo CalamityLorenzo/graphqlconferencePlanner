@@ -5,10 +5,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanner.GraphQL.Types
 {
-    public class SpeakerType : ObjectType<Speaker>
+    // WE define the names 
+    // implementations etc of anything to with the <T>
+    // Includes how to fetch other parts of the type.
+    // And changes to the schema.
+    public class SpeakerType : ObjectType<SpeakerDb>
     {
-        protected override void Configure(IObjectTypeDescriptor<Speaker> descriptor)
+        protected override void Configure(IObjectTypeDescriptor<SpeakerDb> descriptor)
         {
+            descriptor
+                .ImplementsNode()
+                .IdField(t => t.Id)
+                .ResolveNode((ctx, id) => ctx.DataLoader<SpeakerByIdDataLoader>().LoadAsync(id, ctx.RequestAborted));
+
+            
             descriptor
                    .Field(t => t.SessionSpeakers)
                    .ResolveWith<SpeakerResolvers>(t => t.GetSessionAsync(default!, default!, default!, default))
@@ -19,7 +29,7 @@ namespace ConferencePlanner.GraphQL.Types
         private class SpeakerResolvers
         {
             public async Task<IEnumerable<Session>> GetSessionAsync(
-                [Parent] Speaker speaker,
+                [Parent] SpeakerDb speaker,
                 [ScopedService] ApplicationDbContext ctx,
                 SessionByIdDataLoader sessionById,
                 CancellationToken cancellationToken)

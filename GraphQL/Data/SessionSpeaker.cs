@@ -8,6 +8,6 @@
 
         public int SpeakerId { get; set; }
 
-        public Speaker? Speaker { get; set; }
+        public SpeakerDb? Speaker { get; set; }
     }
 }

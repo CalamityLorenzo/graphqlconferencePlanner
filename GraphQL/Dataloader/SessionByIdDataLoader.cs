@@ -17,5 +17,6 @@ namespace ConferencePlanner.GraphQL.Dataloader
             return await ctx.Sessions.Where(a => keys.Contains(a.Id)).ToDictionaryAsync(a => a.Id, cancellationToken);
 
         }
+
     }
 }
