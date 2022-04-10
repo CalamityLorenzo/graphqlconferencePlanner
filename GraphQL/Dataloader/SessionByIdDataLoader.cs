@@ -8,12 +8,11 @@ namespace ConferencePlanner.GraphQL.Dataloader
         private readonly IDbContextFactory<ApplicationDbContext> dbCtxFactory;
 
         public SessionByIdDataLoader(IBatchScheduler batchScheduler,
-                                    IDbContextFactory<ApplicationDbContext> dnCtxFactory) : base(batchScheduler) => this.dbCtxFactory = dnCtxFactory?? throw new ArgumentNullException(nameof(dbCtxFactory));   
+                                    IDbContextFactory<ApplicationDbContext> dnCtxFactory) : base(batchScheduler) => this.dbCtxFactory = dnCtxFactory ?? throw new ArgumentNullException(nameof(dbCtxFactory));
 
         protected override async Task<IReadOnlyDictionary<int, Session>> LoadBatchAsync(IReadOnlyList<int> keys, CancellationToken cancellationToken)
         {
-            await using ApplicationDbContext ctx  = dbCtxFactory.CreateDbContext();
-
+            await using ApplicationDbContext ctx = dbCtxFactory.CreateDbContext();
             return await ctx.Sessions.Where(a => keys.Contains(a.Id)).ToDictionaryAsync(a => a.Id, cancellationToken);
 
         }

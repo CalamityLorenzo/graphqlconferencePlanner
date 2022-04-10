@@ -16,13 +16,14 @@ namespace ConferencePlanner.GraphQL.Types
             descriptor
                 .ImplementsNode()
                 .IdField(t => t.Id)
-                .ResolveNode((ctx, id) => ctx.DataLoader<SpeakerByIdDataLoader>().LoadAsync(id, ctx.RequestAborted));
+                .ResolveNode((ctx, id) => ctx.DataLoader<SpeakerByIdDataLoader>()
+                 .LoadAsync(id, ctx.RequestAborted));
 
             
             descriptor
                    .Field(t => t.SessionSpeakers)
                    .ResolveWith<SpeakerResolvers>(t => t.GetSessionAsync(default!, default!, default!, default))
-                   .UseDbContext<ApplicationDbContext>()
+                   .UseDbExtensionContext<ApplicationDbContext>()
                    .Name("sessions");
         }
 

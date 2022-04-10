@@ -10,11 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(opts => opts.UseSqlite("DataSource=conferences.db"));
 
 builder.Services.AddGraphQLServer()
+                .AddQueryFieldToMutationPayloads()
+                .AddGlobalObjectIdentification()
                 .AddQueryType<Query>()
                 .AddMutationType(d => d.Name("Mutation"))
                 .AddTypeExtension<SpeakerMutations>()
                 .AddType<SpeakerType>()
-                .AddQueryFieldToMutationPayloads()
                 .AddDataLoader<SpeakerByIdDataLoader>()
                 .AddDataLoader<SessionByIdDataLoader>();
 
