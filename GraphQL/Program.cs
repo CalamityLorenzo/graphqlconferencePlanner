@@ -1,6 +1,7 @@
 using ConferencePlanner.GraphQL;
 using ConferencePlanner.GraphQL.Data;
 using ConferencePlanner.GraphQL.Dataloader;
+using ConferencePlanner.GraphQL.Sessions;
 using ConferencePlanner.GraphQL.Speakers;
 using ConferencePlanner.GraphQL.Types;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,15 @@ builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(opts => opts.Us
 builder.Services.AddGraphQLServer()
                 .AddQueryFieldToMutationPayloads()
                 .AddGlobalObjectIdentification()
-                .AddQueryType<Query>()
+                .AddQueryType(d=>d.Name("Query"))
+                .AddTypeExtension<SpeakersQueries>()
                 .AddMutationType(d => d.Name("Mutation"))
                 .AddTypeExtension<SpeakerMutations>()
+                .AddTypeExtension<SessionMutation>()
+                .AddType<AttendeeType>()
+                .AddType<SessionType>()
                 .AddType<SpeakerType>()
+                .AddType<TrackType>()
                 .AddDataLoader<SpeakerByIdDataLoader>()
                 .AddDataLoader<SessionByIdDataLoader>();
 

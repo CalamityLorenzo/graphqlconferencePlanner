@@ -7,7 +7,7 @@ namespace ConferencePlanner.GraphQL.Dataloader
     {
         private readonly IDbContextFactory<ApplicationDbContext> ctxFactory;
 
-        public AttendeeByIdDataLoader(IBatchScheduler batchScheduler, IDbContextFactory<ApplicationDbContext> ctxFactory) : base(batchScheduler)
+        public AttendeeByIdDataLoader(IBatchScheduler batchScheduler, DataLoaderOptions options, IDbContextFactory<ApplicationDbContext> ctxFactory) : base(batchScheduler, options)
         {
             this.ctxFactory = ctxFactory ?? throw new ArgumentNullException(nameof(ctxFactory));
         }

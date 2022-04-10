@@ -3,9 +3,10 @@ using ConferencePlanner.GraphQL.Dataloader;
 using ConferencePlanner.GraphQL.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace ConferencePlanner.GraphQL
+namespace ConferencePlanner.GraphQL.Speakers
 {
-    public class Query
+    [ExtendObjectType("Query")]
+    public class SpeakersQueries
     {
         [UseApplicationDbContext]
         public Task<List<SpeakerDb>> GetSpeakers([ScopedService] ApplicationDbContext context) => context.Speakers.ToListAsync();
