@@ -3,6 +3,7 @@ using ConferencePlanner.GraphQL.Data;
 using ConferencePlanner.GraphQL.Dataloader;
 using ConferencePlanner.GraphQL.Sessions;
 using ConferencePlanner.GraphQL.Speakers;
+using ConferencePlanner.GraphQL.Tracks;
 using ConferencePlanner.GraphQL.Types;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ builder.Services.AddGraphQLServer()
                 .AddMutationType(d => d.Name("Mutation"))
                 .AddTypeExtension<SpeakerMutations>()
                 .AddTypeExtension<SessionMutation>()
+                .AddTypeExtension<TracksMutation>()
                 .AddType<AttendeeType>()
                 .AddType<SessionType>()
                 .AddType<SpeakerType>()
