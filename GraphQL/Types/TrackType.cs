@@ -20,12 +20,15 @@ namespace ConferencePlanner.GraphQL.Types
                 .ResolveWith<TrackResolvers>(t => t.GetSessionsAsync(default!, default!, default!, default))
                 .UseDbExtensionContext<ApplicationDbContext>()
                 .Name("sessions");
+            descriptor
+                .Field(a => a.Name)
+                .useUpperCase();
         }
 
         private class TrackResolvers
         {
             public async Task<IEnumerable<Session>> GetSessionsAsync(
-                Track track,
+                [Parent] Track track,
                 [ScopedService] ApplicationDbContext dbContext,
                 SessionByIdDataLoader sessionById,
                 CancellationToken cancellationToken)

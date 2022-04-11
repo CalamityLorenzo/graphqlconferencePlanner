@@ -14,5 +14,22 @@ namespace ConferencePlanner.GraphQL.Extensions
                 create: s => s.GetRequiredService<IDbContextFactory<TDbContext>>().CreateDbContext(),
                 disposeAsync: (s, c) => c.DisposeAsync());
         }
+
+
+        public static IObjectFieldDescriptor useUpperCase(this IObjectFieldDescriptor descriptor)
+        {
+            return descriptor.Use(next => async context =>
+             {
+                 // This says do the next in the pipeline (Basically yields control to the pipeline before transforming anything)
+
+                 await next(context);
+                 // Here Context has been completed, and Result should have been filled. This is the return journey out of the middleware pipeline.
+                 // And we fuck up the text
+                 if (context.Result is string s)
+                 {
+                     context.Result = s.ToUpperInvariant();
+                 }
+             });
+        }
     }
 }
